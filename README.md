@@ -8,6 +8,7 @@
  **Purpose:** Support agents in generating structured, context-rich prompts to feed into "Cal," the company's Zendesk-embedded AI tool for writing email responses. This ensures outputs are personalized, coherent, and QA-compliant.  
  **Platform:** Google Apps Script Web App bound to a Google Spreadsheet  
  **Audience:** Internal use by Customer Solutions Tech Team
+ **Status:** In active development. Release coming soon.
 
 ---
 
