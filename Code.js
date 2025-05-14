@@ -18,13 +18,3 @@ function include(filename) {
     return HtmlService.createHtmlOutputFromFile(filename).getContent();
 }
 
-// Get configuration for client-side
-function getConfig() {
-  return {
-    COMPANY: COMPANY,
-    DOMAIN_NAME: DOMAIN_NAME,
-    OWNER_NAME: OWNER_NAME,
-    OWNER_EMAIL: OWNER_EMAIL,
-    EID_LENGTH: EID_LENGTH
-  };
-}
