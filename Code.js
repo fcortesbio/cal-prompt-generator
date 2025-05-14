@@ -3,7 +3,7 @@ const DOMAIN_NAME = 'blond.com';
 const OWNER_NAME = 'Steve';
 const OWNER_EMAIL = 'steve.jobs@blond.com';
 const EID_LENGTH = 7;
-
+const favicon_url = "https://drive.google.com/drive/folders/1mzV4rCSd_LGTakCfGijVzZDeX9oHw_rZ"
 // Main function to serve the web app
 function doGet() {
     return HtmlService.createTemplateFromFile('index')
