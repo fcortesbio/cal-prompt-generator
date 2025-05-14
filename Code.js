@@ -9,7 +9,7 @@ function doGet() {
     return HtmlService.createTemplateFromFile('index')
         .evaluate()
         .setTitle('Cal-PGT Prompt Generator Tool')
-        .setFaviconUrl('https://www.google.com/s2/favicons?domain=google.com')
+        .setFaviconUrl(favicon_url)
         .addMetaTag('viewport', 'width=device-width, initial-scale=1')
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
