@@ -44,35 +44,35 @@
 
 ### **Sheet: `user_data` (no header)**
 
-| Column | Description |
-| ----- | ----- |
-| A | agent_eid (7-digit) |
-| B | agent_name ("Last, First") |
-| C | agent_division |
-| D | agent_role ("agent" or "admin") |
+| Column | Description                     |
+|--------|---------------------------------|
+| A      | agent_eid (7-digit)             |
+| B      | agent_name ("Last, First")      |
+| C      | agent_division                  |
+| D      | agent_role ("agent" or "admin") |
 
 ### **Sheet: `prompt_data` (no header)**
 
-| Column | Description |
-| ----- | ----- |
-| A | prompt_id (unique random number) |
-| B | inquiry_reason |
-| C | topic_name |
-| D | case_name (unique within topic) |
-| E | backend_log (optional) |
-| F | email_subject (optional) |
-| G | context (stringified JSON) |
-| H | options (stringified JSON) |
+| Column | Description                      |
+|--------|----------------------------------|
+| A      | prompt_id (unique random number) |
+| B      | inquiry_reason                   |
+| C      | topic_name                       |
+| D      | case_name (unique within topic)  |
+| E      | backend_log (optional)           |
+| F      | email_subject (optional)         |
+| G      | context (stringified JSON)       |
+| H      | options (stringified JSON)       |
 
 ### **Sheet: `pending_users`**
 
-| Column | Description |
-| ----- | ----- |
-| A | EID |
-| B | First Name |
-| C | Last Name |
-| D | Email |
-| E | Status (pending/approved/denied) |
+| Column | Description                      |
+|--------|----------------------------------|
+| A      | EID                              |
+| B      | First Name                       |
+| C      | Last Name                        |
+| D      | Email                            |
+| E      | Status (pending/approved/denied) |
 
 ---
 
@@ -183,10 +183,10 @@ Below is the JSON object to use:
 
 ### **Education Block Logic**
 
-| Condition | Output |
-| ----- | ----- |
-| pending + action_required + justification | 2 paragraphs |
-| pending + pending_reason only | 1 paragraph |
+| Condition                                   | Output       |
+|---------------------------------------------|--------------|
+| pending + action_required + justification   | 2 paragraphs |
+| pending + pending_reason only               | 1 paragraph  |
 | completed + actions_taken + recommendations | 2 paragraphs |
 
 ---
