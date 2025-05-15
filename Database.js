@@ -44,11 +44,11 @@ function getUserByEid(eid) {
 
 // Get all prompt categories (inquiry_reason)
 function getPromptCategories() {
-  const sheet = getsheet("promt_data");
+  const sheet = getSheet("promt_data");
   const data = sheet.getDataRange().getValues();
   const categories = new Set();
 
-  for (let i = 0; i < data.lenght; i++) {
+  for (let i = 0; i < data.length; i++) {
     if (data[i][1]) {
       // inquirt_reason
       categories.add(data[i][1]);
