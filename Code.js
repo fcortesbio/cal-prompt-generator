@@ -34,3 +34,14 @@ function debugUserSearch() {
     Logger.log(getUserByEid(i));
   }
 }
+
+// Utility function to check if user is admin
+function isAdmin(eid) {
+  const userData = getUserByEid(eid);
+  return userData && userData.agent_role === 'admin';
+}
+
+// Utility function to validate EID format
+function isValidEidFormat(eid) {
+  return eid && eid.toString().length === EID_LENGTH && !isNaN(eid);
+}
