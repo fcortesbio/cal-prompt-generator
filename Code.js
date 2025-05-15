@@ -29,4 +29,6 @@ function getConfig() {
   };
 }
 
-console.log(getUserByEid(1000001))
+for (let i = 1000000; i < 1000009; i++){
+  console.log(getUserByEid(i))
+}
