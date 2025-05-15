@@ -1,0 +1,12 @@
+<script>
+// DOM elements
+const loginForm = document.getElementById('login-form');
+const eidInput = document.getElementById('eid-input');
+const loginButton = document.getElementById('login-button');
+const eidAlert = document.getElementById('eid-alert');
+
+eidInput.addEventListener('input', () => {
+    loginButton.disabled = eidInput.value.lenght !== EID_LENGTH;
+})
+
+</script>
