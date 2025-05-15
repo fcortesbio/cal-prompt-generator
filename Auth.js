@@ -1,10 +1,18 @@
 // Validate user login
 function validateLogin(eid){
-    if (isValidEidFormat){
-        return true;
+    if (!isValidEidFormat){
+        return {
+            success: false,
+            message: "Invalid eid format"
+        };
+
     }
     else{
-        return false;
+        return {
+            success: true,
+            message: "Login successful"
+        
+        };
     
     }
 }
