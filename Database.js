@@ -18,21 +18,25 @@ function getSheetByIndex(index) {
   return getSpreadsheet().getSheets()[index];
 }
 
-// Get user data by EID
-function getUserByEid(eid) {
+// Build a map of EID to user data
+function buildEidMap() {
   const sheet = getSheet("user_data");
   const data = sheet.getDataRange().getValues();
+  
+  const eidMap = {};
+  data.forEach(row => {
+    eidMap[row[0]] = {
+      agent_eid: row[0].toString(),
+      agent_name: row[1],
+      agent_division: row[2],
+      agent_role: row[3],
+    };
+  });
+  return eidMap;
+}
 
-  for (let i = 0; i < data.length; i++) {
-    if (data[i][0].toString() === eid.toString()) {
-      return {
-        agent_eid: data[i][0].toString(),
-        agent_name: data[i][1],
-        agent_division: data[i][2],
-        agent_role: data[i][3],
-      };
-    }
-  }
-  Logger.log("EID not found")
-  return null;
+// Get user data by EID using a map
+function getUserByEid(eid) {
+  const eidMap = buildEidMap();
+  return eidMap[eid] || null;
 }
