@@ -7,12 +7,20 @@ function validateLogin(eid) {
         };
 
     }
-    else {
+
+    // Look up for EID in "user_data"
+    const user = getUserByEid(eid);
+    if (!user) {
         return {
-            success: true,
-            message: "Login successful"
-
+            success: false,
+            message: "EID not found",
         };
-
     }
+
+    // 
+    return {
+        success: true,
+        message: "Login successful",
+        user: user,
+    };
 }
