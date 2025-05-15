@@ -22,7 +22,7 @@ function getSheetByIndex(index) {
 function buildEidMap() {
   const sheet = getSheet("user_data");
   const data = sheet.getDataRange().getValues();
-  
+
   const eidMap = {};
   data.forEach(row => {
     eidMap[row[0]] = {
