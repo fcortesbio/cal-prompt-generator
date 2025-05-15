@@ -1,14 +1,13 @@
 <script>
-  // Global variables
+  //   global variables
   let currentUser = null;
   let navigationData = null;
   let currentPromptId = null;
   let currentTemplate = null;
   let config = null;
 
-  // DOM Ready
   document.addEventListener("DOMContentLoaded", function () {
-    // Get configuration
+    // get configuration
     google.script.run
       .withSuccessHandler(function (result) {
         config = result;
@@ -17,13 +16,20 @@
       .getConfig();
   });
 
-  // Initialize the application
+  //   Initialize application
   function initApp() {
     // Check for stored session
     const storedUser = sessionStorage.getItem("calPromptUser");
-    if (storedUser) {
-      currentUser = JSON.parse(storedUser);
-      showDashboard();
+
+    if (soterdUser && storedUser !== "undefined"){
+        try {
+        currentUser = JSON.parse(storedUser);
+        showDashboard();
+      } catch (error) {
+        console.warn("Error parsing stored user data:", error);
+        sessionStorage.removeItem("calPromptUser");
+        setupLoginHandlers();
+      }
     } else {
       setupLoginHandlers();
     }
@@ -39,9 +45,18 @@
     const cancelSignup = document.getElementById("cancel-signup");
 
     // Enable login button when EID has correct length
-    eidInput.addEventListener("input", function () {
-      loginButton.disabled = this.value.length !== config.EID_LENGTH;
-      document.getElementById("eid-alert").classList.add("hidden");
+    eidInput.addEventListener("input", (e) => {
+      // Remove non-digit characters immediately
+      eidInput.value = eidInput.value.replace(/\D/g, "");
+
+      const isValid = /^\d{7}$/.test(eidInput.value); // exactly 7 digits
+      loginButton.disabled = !isValid;
+    });
+
+    eidInput.addEventListener("paste", (e) => {
+      e.preventDefault();
+      const text = (e.clipboardData || window.clipboardData).getData("text");
+      eidInput.value = text.replace(/\D/g, "").slice(0, 7);
     });
 
     // Handle login form submission
@@ -100,5 +115,33 @@
         })
         .submitSignupRequest(eid, firstName, lastName, email);
     });
+  }
+
+  // Show dashboard
+  function showDashboard() {
+    document.getElementById("login-section").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+    document.getElementById("user-name").textContent = currentUser.first_name;
+
+    // Show admin button if user is admin
+    if (currentUser.role === "admin") {
+      document.getElementById("add-button").classList.remove("hidden");
+    }
+
+    // Load navigation data
+    loadNavigationData();
+
+    // Setup dashboard event handlers
+    setupDashboardHandlers();
+  }
+
+  // Load navigation data
+  function loadNavigationData() {
+    google.script.run
+      .withSuccessHandler(function (result) {
+        navigationData = result;
+        renderNavigation();
+      })
+      .getNavigationData();
   }
 </script>
