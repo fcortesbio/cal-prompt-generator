@@ -1,0 +1,8 @@
+# Exclude test logic
+tests/
+*.test.js
+mockSpreadsheetApp.js
+run-tests.js
+
+.vscode/
+node_modules/
