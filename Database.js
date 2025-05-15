@@ -24,7 +24,7 @@ function getUserDataByEID(eid) {
   const data = sheet.getDataRange().getValues();
 
   for (let i = 0; i < data.length; i++) {
-    if (data[i][0] === eid) {
+    if (String(data[i][0]) === String(eid)) {
       return {
         agent_eid: data[i][0],
         agent_name: data[i][1],
