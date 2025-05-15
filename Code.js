@@ -3,7 +3,7 @@ const DOMAIN_NAME = "blond.com";
 const OWNER_NAME = "Steve";
 const OWNER_EMAIL = "steve.jobs@blond.com";
 const EID_LENGTH = 7;
-// const favicon_id = "1Lrjk8HQkfPN_7XzJnM4Tx6GK-ZVMNS1A"
+const favicon_id = "1Lrjk8HQkfPN_7XzJnM4Tx6GK-ZVMNS1A"
 
 // Main function to serve the web app
 function doGet(e) {
@@ -21,7 +21,7 @@ function serveFavicon() {
   const file = DriveApp.getFileById(favicon_id);
   const blob = file.getBlob();
   return ContentService.createOutput(blob).setMimeType(
-    ContentService.MimeType.PNG
+    ContentService.MimeType.ico
   );
 }
 
