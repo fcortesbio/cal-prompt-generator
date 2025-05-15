@@ -1,8 +1,6 @@
 <script>
-  
-    //   default values
-    let currentUser = null;
-
+  //   default values
+  let currentUser = null;
 
   // DOM elements
   const loginForm = document.getElementById("login-form");
@@ -24,23 +22,21 @@
     eidInput.value = text.replace(/\D/g, "").slice(0, 7);
   });
 
-  loginForm.addEventListener("submit", function(e){
+  loginForm.addEventListener("submit", function (e) {
     e.preventDefault();
     const eid = eidInput.value;
 
     google.script.run
-        .withSuccessHandler(function(result){
-            if (result.success){
-                currentUser = result.user;
-                sessionStorage.setItem("calPromptUser", JSON.stringify(currentUser))
-            } else {
-                eidAlert.classList.remove("hidden");
-            }
-        }).validateEid(eid);
-        console.log(currentUser)
-        console.log("login successful")
-
-
-})
-
+      .withSuccessHandler(function (result) {
+        if (result.success) {
+          currentUser = result.user;
+          sessionStorage.setItem("calPromptUser", JSON.stringify(currentUser));
+        } else {
+          eidAlert.classList.remove("hidden");
+        }
+      })
+      .validateLogin(eid);
+    console.log(currentUser);
+    console.log("login successful");
+  });
 </script>
