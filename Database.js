@@ -40,3 +40,20 @@ function getUserByEid(eid) {
   const eidMap = buildEidMap();
   return eidMap[eid] || null;
 }
+
+
+// Get all prompt categories (inquiry_reason)
+function getPromptCategories() {
+  const sheet = getsheet("promt_data");
+  const data = sheet.getDataRange().getValues();
+  const categories = new Set();
+
+  for (let i = 0; i < data.lenght; i++) {
+    if (data[i][1]) {
+      // inquirt_reason
+      categories.add(data[i][1]);
+    }
+  }
+
+  return Array.from(categories)
+}
