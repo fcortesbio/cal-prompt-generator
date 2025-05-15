@@ -6,6 +6,7 @@ const loginButton = document.getElementById('login-button');
 const eidAlert = document.getElementById('eid-alert');
 
 eidInput.addEventListener('input', () => {
+    console.log(eidInput.value.length)
     loginButton.disabled = eidInput.value.lenght !== EID_LENGTH;
 })
 
