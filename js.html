@@ -5,7 +5,7 @@
   const loginButton = document.getElementById("login-button");
   const eidAlert = document.getElementById("eid-alert");
 
-  eidInput.addEventListener("input", (e) => {
+  eidInput.addEventListener("input", () => {
     // Remove non-digit characters immediately
     eidInput.value = eidInput.value.replace(/\D/g, "").slice(0, 7);
 
