@@ -10,6 +10,7 @@ function validateLogin(eid) {
 
     // Look up for EID in "user_data"
     const user = getUserByEid(eid);
+    console.log("look up user in database")
     if (!user) {
         return {
             success: false,
@@ -18,6 +19,8 @@ function validateLogin(eid) {
     }
 
     // 
+    console.log("found user in database")
+    console.log("user:", user)
     return {
         success: true,
         message: "Login successful",
