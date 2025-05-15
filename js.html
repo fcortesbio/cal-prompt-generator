@@ -7,66 +7,17 @@
   const loginButton = document.getElementById("login-button");
   const eidAlert = document.getElementById("eid-alert");
 
-  console.log("Found loginForm:", loginForm); // <-- Add this
-  console.log("Found eidInput:", eidInput);     // <-- Add this
-  console.log("Found loginButton:", loginButton); // <-- Add this
-  console.log("Found eidAlert:", eidAlert);     // <-- Add this
+  eidInput.addEventListener("input", (e) => {
+    // Remove non-digit characters immediately
+    eidInput.value = eidInput.value.replace(/\D/g, "");
 
+    const isValid = /^\d{7}$/.test(eidInput.value); // exactly 7 digits
+    loginButton.disabled = !isValid;
+  });
 
-  if (eidInput) { // Ensure element is found before adding listener
-    eidInput.addEventListener("input", () => {
-      // This log should appear when you type
-      console.log("Input event fired. Current value:", eidInput.value);
-
-      // Remove non-digit characters immediately and limit length
-      const filteredValue = eidInput.value.replace(/\D/g, "").slice(0, 7);
-
-      // Only update the value if it changed after filtering
-      // This prevents the cursor from jumping unnecessarily
-      if (eidInput.value !== filteredValue) {
-         const originalSelectionStart = eidInput.selectionStart; // Remember cursor position
-         const originalSelectionEnd = eidInput.selectionEnd;
-
-         eidInput.value = filteredValue;
-
-         // Try to restore cursor position (can be tricky with filtering)
-         // Add logic here if precise cursor control is needed,
-         // but for simple number filtering, sometimes letting the browser handle it is okay.
-         // For now, let's just update the value.
-      }
-
-
-      // Check validity for button state (using the filtered value)
-      const isValid = /^\d{7}$/.test(filteredValue); // Check the filtered value
-      console.log("Is EID valid for login button?", isValid);
-      loginButton.disabled = !isValid;
-
-      // Note: This is where you'd likely call a server-side function
-      // using google.script.run to check if the EID exists.
-      // For now, the button logic is based only on format.
-    });
-
-    // You might also want a paste listener
-     eidInput.addEventListener('paste', (event) => {
-         event.preventDefault(); // Prevent default paste behavior
-         const pasteData = event.clipboardData.getData('Text');
-         const digitsOnly = pasteData.replace(/\D/g, '');
-         const currentInput = eidInput.value;
-         const maxLen = 7;
-         const newValue = (currentInput + digitsOnly).slice(0, maxLen); // Append and truncate
-
-         eidInput.value = newValue;
-
-          // Trigger the input event handler manually after pasting filtered content
-         const inputEvent = new Event('input', { bubbles: true });
-         eidInput.dispatchEvent(inputEvent);
-     });
-
-
-  } else {
-    console.error("EID input element with ID 'eid-input' not found!"); // <-- Add this
-  }
-
-  console.log("js.html script finished setup"); // <-- Add this
-
+  eidInput.addEventListener("paste", (e) => {
+    e.preventDefault();
+    const text = (e.clipboardData || window.clipboardData).getData("text");
+    eidInput.value = text.replace(/\D/g, "").slice(0, 7);
+  });
 </script>
