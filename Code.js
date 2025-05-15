@@ -31,6 +31,6 @@ function getConfig() {
 
 function debugUserSearch() {
   for (let i = 1000000; i <= 1000009; i++) {
-    Logger.log(getUserDataByEID(i));
+    Logger.log(getUserByEID(i));
   }
 }
