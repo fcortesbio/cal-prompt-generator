@@ -1,13 +1,13 @@
 <script>
-// DOM elements
-const loginForm = document.getElementById('login-form');
-const eidInput = document.getElementById('eid-input');
-const loginButton = document.getElementById('login-button');
-const eidAlert = document.getElementById('eid-alert');
+  // DOM elements
+  const loginForm = document.getElementById("login-form");
+  const eidInput = document.getElementById("eid-input");
+  const loginButton = document.getElementById("login-button");
+  const eidAlert = document.getElementById("eid-alert");
 
-eidInput.addEventListener('input', () => {
-    console.log(eidInput.value.length)
-    loginButton.disabled = eidInput.value.lenght !== EID_LENGTH;
-})
-
+  eidInput.addEventListener("input", () => {
+    const val = eidInput.value;
+    const isValid = /^\d{7}$/.test(val); // exactly 7 digits
+    loginButton.disabled = !isValid;
+  });
 </script>
