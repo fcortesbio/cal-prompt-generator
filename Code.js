@@ -28,3 +28,5 @@ function getConfig() {
     EID_LENGTH: EID_LENGTH,
   };
 }
+
+console.log(getUserDataByEID(1000001))
