@@ -7,6 +7,7 @@
 
   eidInput.addEventListener("input", () => {
     // Remove non-digit characters immediately
+    console.log(eidInput.value);
     eidInput.value = eidInput.value.replace(/\D/g, "").slice(0, 7);
 
     const isValid = /^\d{7}$/.test(eidInput.value); // exactly 7 digits
