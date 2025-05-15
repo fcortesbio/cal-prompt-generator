@@ -1,8 +1,8 @@
 # Exclude test logic
-tests/
+/tests/
 *.test.js
-mockSpreadsheetApp.js
-run-tests.js
+test/mockSpreadsheetApp.js
+test/run-tests.js
 
 .vscode/
 node_modules/
