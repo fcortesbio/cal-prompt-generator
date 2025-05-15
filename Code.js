@@ -29,4 +29,4 @@ function getConfig() {
   };
 }
 
-console.log(getUserDataByEID(1000001))
+console.log(getUserByEid(1000001))
