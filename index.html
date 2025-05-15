@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <base target="_top" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cal Prompt Generator</title>
+    <?!= include('css'); ?>
+  </head>
 
-<head>
-  <base target="_top">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cal Prompt Generator</title>
-  <?!= include('css'); ?>
-</head>
-
-<body>
-  <!-- Login Section -->
-  <div id="login-section">
-    <div id="login-container">
-      <h1>Cal Prompt Generator Tool</h1>
-      <form id="login-form">
-        <div class="form-group">
-          <label for="eid-input">Employee ID (EID)</label>
-          <input type="number" id="eid-input" placeholder="Enter your 7-digit EID" required>
-        </div>
-        <button type="submit" id="login-button" disabled>Login</button>
-      </form>
-      <p id="eid-alert" class="hidden">EID not found. <span id="signup-link">Click here to sign up!</span></p>
+  <body>
+    <!-- Login Section -->
+    <div id="login-section">
+      <div id="login-container">
+        <h1>Cal Prompt Generator Tool</h1>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="eid-input">Employee ID (EID)</label>
+            <input
+              type="text"
+              id="eid-input"
+              maxlenght="7"
+              pattern="\d*"
+              placeholder="Enter your EID"
+              required
+              inputmode="numeric"
+              autocomplete="off"
+            />
+          </div>
+          <button type="submit" id="login-button" disabled>Login</button>
+        </form>
+        <p id="eid-alert" class="hidden">
+          EID not found. <span id="signup-link">Click here to sign up!</span>
+        </p>
+      </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>
