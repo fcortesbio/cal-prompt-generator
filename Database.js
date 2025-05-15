@@ -19,20 +19,20 @@ function getSheetByIndex(index) {
 }
 
 // Get user data by EID
-function getUserDataByEID(eid) {
+function getUserByEid(eid) {
   const sheet = getSheet("user_data");
   const data = sheet.getDataRange().getValues();
 
   for (let i = 0; i < data.length; i++) {
-    if (String(data[i][0]) === String(eid)) {
+    if (data[i][0].toString() === eid.toString()) {
       return {
-        agent_eid: data[i][0],
+        agent_eid: data[i][0].toString(),
         agent_name: data[i][1],
         agent_division: data[i][2],
         agent_role: data[i][3],
       };
     }
   }
-
+  Logger.log("EID not found")
   return null;
 }
