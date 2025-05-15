@@ -1,42 +1,104 @@
 <script>
-  //   default values
+  // Global variables
   let currentUser = null;
+  let navigationData = null;
+  let currentPromptId = null;
+  let currentTemplate = null;
+  let config = null;
 
-  // DOM elements
-  const loginForm = document.getElementById("login-form");
-  const eidInput = document.getElementById("eid-input");
-  const loginButton = document.getElementById("login-button");
-  const eidAlert = document.getElementById("eid-alert");
-
-  eidInput.addEventListener("input", (e) => {
-    // Remove non-digit characters immediately
-    eidInput.value = eidInput.value.replace(/\D/g, "");
-
-    const isValid = /^\d{7}$/.test(eidInput.value); // exactly 7 digits
-    loginButton.disabled = !isValid;
-  });
-
-  eidInput.addEventListener("paste", (e) => {
-    e.preventDefault();
-    const text = (e.clipboardData || window.clipboardData).getData("text");
-    eidInput.value = text.replace(/\D/g, "").slice(0, 7);
-  });
-
-  loginForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const eid = eidInput.value;
-
+  // DOM Ready
+  document.addEventListener("DOMContentLoaded", function () {
+    // Get configuration
     google.script.run
       .withSuccessHandler(function (result) {
-        if (result.success) {
-          currentUser = result.user;
-          sessionStorage.setItem("calPromptUser", JSON.stringify(currentUser));
-        } else {
-          eidAlert.classList.remove("hidden");
-        }
+        config = result;
+        initApp();
       })
-      .validateLogin(eid);
-    console.log(currentUser);
-    console.log("login successful");
+      .getConfig();
   });
+
+  // Initialize the application
+  function initApp() {
+    // Check for stored session
+    const storedUser = sessionStorage.getItem("calPromptUser");
+    if (storedUser) {
+      currentUser = JSON.parse(storedUser);
+      showDashboard();
+    } else {
+      setupLoginHandlers();
+    }
+  }
+
+  // Setup login form handlers
+  function setupLoginHandlers() {
+    const eidInput = document.getElementById("eid-input");
+    const loginButton = document.getElementById("login-button");
+    const loginForm = document.getElementById("login-form");
+    const signupLink = document.getElementById("signup-link");
+    const signupForm = document.getElementById("signup-form");
+    const cancelSignup = document.getElementById("cancel-signup");
+
+    // Enable login button when EID has correct length
+    eidInput.addEventListener("input", function () {
+      loginButton.disabled = this.value.length !== config.EID_LENGTH;
+      document.getElementById("eid-alert").classList.add("hidden");
+    });
+
+    // Handle login form submission
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const eid = eidInput.value;
+
+      google.script.run
+        .withSuccessHandler(function (result) {
+          if (result.success) {
+            currentUser = result.user;
+            sessionStorage.setItem(
+              "calPromptUser",
+              JSON.stringify(currentUser)
+            );
+            showDashboard();
+          } else {
+            document.getElementById("eid-alert").classList.remove("hidden");
+          }
+        })
+        .validateLogin(eid);
+    });
+
+    // Show signup form
+    signupLink.addEventListener("click", function () {
+      document.getElementById("login-form").classList.add("hidden");
+      document.getElementById("eid-alert").classList.add("hidden");
+      document.getElementById("sign-up-form").classList.remove("hidden");
+      document.getElementById("signup-eid").value = eidInput.value;
+    });
+
+    // Cancel signup
+    cancelSignup.addEventListener("click", function () {
+      document.getElementById("sign-up-form").classList.add("hidden");
+      document.getElementById("login-form").classList.remove("hidden");
+    });
+
+    // Handle signup form submission
+    signupForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const eid = document.getElementById("signup-eid").value;
+      const firstName = document.getElementById("signup-firstname").value;
+      const lastName = document.getElementById("signup-lastname").value;
+      const email = document.getElementById("signup-email").value;
+
+      google.script.run
+        .withSuccessHandler(function (result) {
+          if (result.success) {
+            showToast(result.message);
+            document.getElementById("sign-up-form").classList.add("hidden");
+            document.getElementById("login-form").classList.remove("hidden");
+          } else {
+            showToast(result.message, true);
+          }
+        })
+        .submitSignupRequest(eid, firstName, lastName, email);
+    });
+  }
 </script>

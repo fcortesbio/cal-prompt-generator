@@ -1,29 +1,34 @@
-// Validate user login
 function validateLogin(eid) {
-    if (!isValidEidFormat) {
+    console.log("start input validation")
+    if (!isValidEidFormat(eid)) {
         return {
             success: false,
-            message: "Invalid eid format"
+            message: 'Invalid EID format. EID must be ' + EID_LENGTH + ' digits.'
         };
-
     }
 
     // Look up for EID in "user_data"
-    const user = getUserByEid(eid);
-    console.log("look up user in database")
-    if (!user) {
+    const userData = getUserByEid(eid);
+
+    if (!userData) {
         return {
             success: false,
-            message: "EID not found",
+            message: 'EID not found in the system.'
         };
     }
 
-    // 
-    console.log("found user in database")
-    console.log("user:", user)
+    // Extract first name from "Last, First" format
+    const nameParts = userData.agent_name.split(', ');
+    const firstName = nameParts.length > 1 ? nameParts[1] : userData.agent_name;
+
+    console.log(firstName)
     return {
         success: true,
-        message: "Login successful",
-        user: user,
+        user: {
+            eid: userData.agent_eid,
+            first_name: firstName,
+            division: userData.agent_division,
+            role: userData.agent_role
+        }
     };
 }
