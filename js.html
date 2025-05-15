@@ -6,6 +6,8 @@
   const eidAlert = document.getElementById("eid-alert");
 
   eidInput.addEventListener("input", () => {
+    // Remove non-digit characters immediately
+    eidInput.value = eidInput.value.replace(/\D/g, "");
     const val = eidInput.value;
     const isValid = /^\d{7}$/.test(val); // exactly 7 digits
     loginButton.disabled = !isValid;
