@@ -21,7 +21,7 @@
     // Check for stored session
     const storedUser = sessionStorage.getItem("calPromptUser");
 
-    if (soterdUser && storedUser !== "undefined"){
+    if (storedUser && storedUser !== "undefined"){
         try {
         currentUser = JSON.parse(storedUser);
         showDashboard();
