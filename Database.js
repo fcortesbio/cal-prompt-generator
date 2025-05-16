@@ -117,3 +117,28 @@ function debugPromptStructure() {
 
   Logger.log("\n✅ Prompt structure debug complete.");
 }
+
+// Get prompt data by ID
+function getPromptById(promptId) {
+  const sheet = getSheet('prompt_data');
+  const data = sheet.getDataRange().getValues();
+  
+  for (let i = 0; i < data.length; i++) {
+    if (data[i][0].toString() === promptId.toString()) {
+      return {
+        prompt_id: data[i][0],
+        inquiry_reason: data[i][1],
+        topic_name: data[i][2],
+        case_name: data[i][3],
+        backend_log: data[i][4] || '',
+        email_subject: data[i][5] || '',
+        context: JSON.parse(data[i][6] || '{}'),
+        options: JSON.parse(data[i][7] || '{}')
+      };
+    }
+  }
+  
+  return null;
+}
+
+
