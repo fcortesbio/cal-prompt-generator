@@ -146,7 +146,64 @@
 	}
 
 
+	// Render navigation sidebar
+	function renderNavigation() {
+		const navBar = document.getElementById('navigation-bar');
+		navBar.innerHTML = '';
 
+		navigationData.forEach(function (category) {
+			const categoryDiv = document.createElement('div');
+			categoryDiv.className = 'nav-category';
+
+			const categoryTitle = document.createElement('div');
+			categoryTitle.className = 'nav-category-title';
+			categoryTitle.textContent = category.name;
+			categoryTitle.addEventListener('click', function () {
+				this.nextElementSibling.classList.toggle('hidden');
+			});
+
+			const topicsDiv = document.createElement('div');
+
+			category.topics.forEach(function (topic) {
+				const topicDiv = document.createElement('div');
+				topicDiv.className = 'nav-topic';
+
+				const topicTitle = document.createElement('div');
+				topicTitle.className = 'nav-topic-title';
+				topicTitle.textContent = topic.name;
+				topicTitle.addEventListener('click', function () {
+					this.nextElementSibling.classList.toggle('hidden');
+				});
+
+				const casesDiv = document.createElement('div');
+
+				topic.cases.forEach(function (caseItem) {
+					const caseDiv = document.createElement('div');
+					caseDiv.className = 'nav-case';
+
+					const caseLink = document.createElement('a');
+					caseLink.textContent = caseItem.case_name;
+					caseLink.href = '#';
+					caseLink.dataset.promptId = caseItem.prompt_id;
+					caseLink.addEventListener('click', function (e) {
+						e.preventDefault();
+						loadPrompt(caseItem.prompt_id);
+					});
+
+					caseDiv.appendChild(caseLink);
+					casesDiv.appendChild(caseDiv);
+				});
+
+				topicDiv.appendChild(topicTitle);
+				topicDiv.appendChild(casesDiv);
+				topicsDiv.appendChild(topicDiv);
+			});
+
+			categoryDiv.appendChild(categoryTitle);
+			categoryDiv.appendChild(topicsDiv);
+			navBar.appendChild(categoryDiv);
+		});
+	}
 
 
 
