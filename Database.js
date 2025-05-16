@@ -142,3 +142,43 @@ function getPromptById(promptId) {
 }
 
 
+// Save new prompt template
+function savePromptTemplate(template) {
+  const sheet = getSheet('prompt_data');
+  const promptId = generateUniqueId();
+  
+  sheet.appendRow([
+    promptId,
+    template.inquiry_reason,
+    template.topic_name,
+    template.case_name,
+    template.backend_log || '',
+    template.email_subject || '',
+    JSON.stringify(template.context || {}),
+    JSON.stringify(template.options || {})
+  ]);
+  
+  return promptId;
+}
+
+// Update existing prompt template
+function updatePromptTemplate(template) {
+  const sheet = getSheet('prompt_data');
+  const data = sheet.getDataRange().getValues();
+  
+  for (let i = 0; i < data.length; i++) {
+    if (data[i][0].toString() === template.prompt_id.toString()) {
+      sheet.getRange(i + 1, 2).setValue(template.inquiry_reason);
+      sheet.getRange(i + 1, 3).setValue(template.topic_name);
+      sheet.getRange(i + 1, 4).setValue(template.case_name);
+      sheet.getRange(i + 1, 5).setValue(template.backend_log || '');
+      sheet.getRange(i + 1, 6).setValue(template.email_subject || '');
+      sheet.getRange(i + 1, 7).setValue(JSON.stringify(template.context || {}));
+      sheet.getRange(i + 1, 8).setValue(JSON.stringify(template.options || {}));
+      
+      return true;
+    }
+  }
+  
+  return false;
+}
