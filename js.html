@@ -205,6 +205,41 @@
 		});
 	}
 
+	// Load prompt
+	function loadPrompt(promptId) {
+		currentPromptId = promptId;
+
+		google.script.run
+			.withSuccessHandler(function (result) {
+				if (result.success) {
+					hideAllContentAreas();
+					document.getElementById('prompt-area').classList.remove('hidden');
+
+					// Set prompt title and description
+					document.getElementById('prompt-title').textContent = result.template.case_name;
+
+					let description = '';
+					if (result.template.backend_log) {
+						description += '<strong>Backend Log:</strong> ' + result.template.backend_log + '<br>';
+					}
+					if (result.template.email_subject) {
+						description += '<strong>Email Subject:</strong> ' + result.template.email_subject;
+					}
+
+					document.getElementById('prompt-description').innerHTML = description;
+
+					// Generate options form
+					generateOptionsForm(result.template.options);
+
+					// Generate initial preview
+					updatePromptPreview();
+				} else {
+					showToast(result.message, true);
+				}
+			})
+			.getPromptById(promptId);
+	}
+
 
 
 </script>
