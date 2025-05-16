@@ -182,3 +182,18 @@ function updatePromptTemplate(template) {
   
   return false;
 }
+
+// Delete prompt template
+function deletePromptTemplate(promptId) {
+  const sheet = getSheet('prompt_data');
+  const data = sheet.getDataRange().getValues();
+  
+  for (let i = 0; i < data.length; i++) {
+    if (data[i][0].toString() === promptId.toString()) {
+      sheet.deleteRow(i + 1);
+      return true;
+    }
+  }
+  
+  return false;
+}
